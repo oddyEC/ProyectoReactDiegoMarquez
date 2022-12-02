@@ -170,11 +170,8 @@ export const TipoProductoEdit = () => {
 
 export const TipoProductoEliminar = () => {
   const [tipoProducto, setTipoProducto] = useState({});
-  //const [clientCategory, setClientCategory] = useState([]);
-
   const [loading, setLoading] = useState(true);
   const { tipoProductoId } = useParams();
-
   const navegacion = useNavigate();
 
   useEffect(() => {
@@ -236,7 +233,6 @@ const TipoProductoList = () => {
 
   useEffect(() => {
     clientHttp.get(`/TipoProducto`).then((response) => {
-      //console.log(response);
       setTipoProductos(response.data);
     });
   }, []);

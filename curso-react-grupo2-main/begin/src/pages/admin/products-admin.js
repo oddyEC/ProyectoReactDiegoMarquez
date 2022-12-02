@@ -368,8 +368,6 @@ export const ProductoEdit = () => {
 
 export const ProductoEliminar = () => {
   const [producto, setProducto] = useState({});
-  //const [clientCategory, setClientCategory] = useState([]);
-
   const [loading, setLoading] = useState(true);
   const { productoId } = useParams();
 
