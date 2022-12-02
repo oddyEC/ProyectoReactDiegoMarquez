@@ -25,11 +25,14 @@ const NavegacionPublica = () => {
 
         <div className="collapse navbar-collapse" id="navbarsExample07">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-      
-            {routesPublic.map((route)=><li key={route.key} className="nav-item">
-              <Link to={route.route} className="nav-link"> {route.name}</Link>
-            </li>)} 
-            
+            {routesPublic.map((route) => (
+              <li key={route.key} className="nav-item">
+                <Link to={route.route} className="nav-link">
+                  {" "}
+                  {route.name}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
       </div>

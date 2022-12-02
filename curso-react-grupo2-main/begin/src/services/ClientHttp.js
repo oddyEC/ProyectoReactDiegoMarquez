@@ -1,5 +1,4 @@
-
-import axios from 'axios';
+import axios from "axios";
 
 //1. Crear instancia  de axios. Configuración personalizada.
 const clientHttp = axios.create({
@@ -9,7 +8,6 @@ const clientHttp = axios.create({
   timeout: 30000, // `0` es el valor por defecto (no timeout)
   //Otras  configuraciones globales...
 });
-
 
 //2. Puedes interceptar peticiones o respuestas
 //axios.interceptors.request.use(...)
