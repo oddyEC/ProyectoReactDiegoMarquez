@@ -253,8 +253,6 @@ export const ClientEliminar = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         if (event.target.checkValidity() === true) {
-            //console.log("Enviar...");
-            //console.log(client);
             clientHttp.delete(`/Cliente/?id=${clientId}`, client)
                 .then((response) => {
                     navegacion(`/admin/clients`)
