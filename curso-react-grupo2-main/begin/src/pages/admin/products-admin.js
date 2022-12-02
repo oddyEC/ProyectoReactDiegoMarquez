@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import clientHttp from "../../services/ClientHttp";
+
 export const ProductoCreate = () => {
   const [producto, setProducto] = useState({});
   const [marca, setMarca] = useState([]);
@@ -178,7 +179,7 @@ export const ProductoCreate = () => {
   );
 };
 
-export const ProductEdit = () => {
+export const ProductoEdit = () => {
   const [producto, setProducto] = useState({});
   const [marca, setMarca] = useState([]);
   const [tipoProducto, setTipoProducto] = useState([]);
@@ -220,7 +221,7 @@ export const ProductEdit = () => {
       console.log("Enviar...");
       console.log(producto);
       clientHttp
-        .put(`/Producto/?id=${productoId}`, producto)
+        .put(`/Producto?id=${productoId}`, producto)
         .then((response) => {
           navegacion(`/admin/products`);
         });
@@ -365,7 +366,7 @@ export const ProductEdit = () => {
   );
 };
 
-export const ProductDelete = () => {
+export const ProductoEliminar = () => {
   const [producto, setProducto] = useState({});
   //const [clientCategory, setClientCategory] = useState([]);
 
@@ -380,6 +381,7 @@ export const ProductDelete = () => {
       setLoading(false);
     });
   }, []);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     if (event.target.checkValidity() === true) {
@@ -433,60 +435,62 @@ export const ProductDelete = () => {
   );
 };
 
-const ProductList = () => {
+const ProductsList = () => {
   const [products, setProducts] = useState([]);
+
   const navegacion = useNavigate();
 
   useEffect(() => {
     clientHttp.get(`/Producto`).then((response) => {
+      //console.log(response);
       setProducts(response.data.lista);
     });
   }, []);
-  const handlerEditar = (product) => {
-    navegacion(`/admin/products/${product.id}`);
-  };
-  // const handlerEliminar = (product) => {
-  //   clientHttp.delete(`/Producto?marcaId=${product.id}`).then(() => {
-  //     alert("Elemento eliminado");
-  //     navegacion(`/admin/products`);
-  //   });
-  // };
 
-  const handlerEliminar = (product) => {
-    navegacion(`/admin/products/${product.id}`);
+  const handlerEditar = (products) => {
+    navegacion(`/admin/products/${products.id}`);
+  };
+
+  const handlerEliminar = (products) => {
+    navegacion(`/admin/productsD/${products.id}`);
   };
 
   const handlerCrear = () => {
-    navegacion(`/admin/products`);
+    navegacion(`/admin/productsC`);
   };
+
   return (
     <table className="table">
       <thead>
         <tr>
+          <td>
+            <button onClick={(e) => handlerCrear()}>Añadir Productos</button>
+          </td>
+        </tr>
+        <tr>
+          <th>Id</th>
           <th>Nombre</th>
           <th>Precio</th>
           <th>Observaciones</th>
           <th>Caducidad</th>
-          <th>Marca ID</th>
-          <th>Tipo Producto ID</th>
+          <th>Marca</th>
+          <th>TipoProducto</th>
+          <th>Acciones</th>
         </tr>
       </thead>
+
       <tbody>
         {products.map((cli) => (
           <tr key={cli.id}>
+            <td>{cli.id}</td>
             <td>{cli.nombre}</td>
-            <td>${cli.precio}.00</td>
+            <td>{cli.precio}</td>
             <td>{cli.observaciones}</td>
             <td>{cli.caducidad}</td>
-            <td>{cli.marcaId}</td>
-            <td>{cli.tipoProductoId}</td>
-            <td>
-              <button onClick={(e) => handlerCrear()}>Añadir</button>
-            </td>
+            <td>{cli.marca}</td>
+            <td>{cli.tipoProducto}</td>
             <td>
               <button onClick={(e) => handlerEditar(cli)}>Editar</button>
-            </td>
-            <td>
               <button onClick={(e) => handlerEliminar(cli)}>Eliminar</button>
             </td>
           </tr>
@@ -496,6 +500,6 @@ const ProductList = () => {
   );
 };
 
-export default function ProductAdmin() {
-  return <ProductList />;
+export default function ProductsAdmin() {
+  return <ProductsList />;
 }
